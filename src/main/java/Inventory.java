@@ -1,17 +1,53 @@
-import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class Inventory {
-    private final ArrayList<Stock> inventory = new ArrayList<>();
+    EnumMap<Product, Stock> inventory;
+    SupplyHistory supplyHistory;
 
-    public void addStock(Stock stock) {
-        inventory.add(stock);
+    public Inventory(SupplyHistory supplyHistory) {
+        this.inventory = new EnumMap<>(Product.class);
+        this.supplyHistory = supplyHistory;
+    }
+
+    public void add(Stock stock) {
+        // does not support different shelf placements
+        inventory.put(stock.getProduct(), stock);
+    }
+
+    public boolean take(Product product, int orderAmount) {
+        boolean hasProduct = inventory.containsKey(product);
+        if (!hasProduct)
+            return false;
+
+        Stock stock = inventory.get(product);
+
+        boolean gotStock = stock.take(orderAmount);
+        if (!gotStock)
+            return false;
+
+        if(stock.isUnderThreshold()){
+            int refill = product.getRefillNumber();
+        }
+
+        int threshold = product.getThreshold();
+        int stockAmount = inventory.get(product).getAmount();
+        if(threshold > stockAmount) {
+            int refillAmount = product.getRefillNumber();
+            stock.add(refillAmount);
+            supplyHistory.addSupplierRecord(new SupplierRecord(refillAmount, product, stockAmount));
+        }
+        return true;
     }
 
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("INVENTORY:\n");
-        for (Stock stock : inventory) {
-            str.append(stock.toString()).append("\n");
+        for (Map.Entry<Product, Stock> entry : inventory.entrySet()) {
+            Product key = entry.getKey();
+            Stock value = entry.getValue();
+            String s = String.format("%s: %d", key.getName(), value.getAmount());
+            str.append(s).append("\n");
         }
         return str.toString();
     }

@@ -9,23 +9,21 @@ public class Stock {
         this.shelf = shelf;
     }
 
-    public Product getProduct() {return this.product;}
+    public Product getProduct() { return this.product; }
     public int getAmount() {return this.amount;}
-    public String getShelf() {return this.shelf;}
 
     public boolean take(int orderAmount) {
-        if(this.amountIsZero()) return false;
+        if(this.amount == 0) return false;
         if(orderAmount > this.amount) return false;
         this.amount -= orderAmount;
         return true;
     }
 
-    public boolean amountIsZero(){
-        return this.amount == 0;
+    public void add(int quantity){
+        this.amount += quantity;
     }
 
-    @Override
-    public String toString() {
-        return String.format("Product: %s, Amount: %d, Shelf: %s", product, amount, shelf);
+    public boolean isUnderThreshold(){
+        return this.amount < this.product.getThreshold();
     }
 }
