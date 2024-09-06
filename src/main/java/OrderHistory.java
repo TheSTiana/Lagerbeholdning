@@ -16,10 +16,6 @@ public class OrderHistory {
         }
     }
 
-    private int getQuantityForTheWholeOrder(int id) {
-        return orders.get(id).stream().mapToInt(OrderLine::getQuantity).sum();
-    }
-
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("ORDER HISTORY:\n");

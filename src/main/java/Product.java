@@ -17,8 +17,4 @@ public enum Product {
     public int getThreshold() {return threshold;}
     public int getRefillNumber() {return refillNumber;}
 
-
-    public String description() {
-        return String.format("Name: %s, Threshold: %d, Refill Number: %d", getName(), getThreshold(), getRefillNumber());
-    }
 }

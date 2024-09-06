@@ -75,5 +75,4 @@ public class ManagementSystem {
                 orderHistory.add(id, new OrderLine(product, amount, false));
         }
     }
-
 }

@@ -11,7 +11,7 @@ public class OrderLine {
     public OrderLine(Product product, int quantity, boolean fulfilled) {
         this.product = product;
         this.quantity = quantity;
-        this.fulfilled = false;
+        this.fulfilled = fulfilled;
     }
 
     public Product getProduct() {return product;}
