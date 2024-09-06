@@ -1,5 +1,5 @@
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SupplyHistory sh = new SupplyHistory();
         Inventory inv = new Inventory(sh);
         OrderHistory oh = new OrderHistory();
@@ -19,8 +19,5 @@ public class App {
         System.out.println(oh);
         System.out.println(inv);
         System.out.println(sh);
-
-
-
     }
 }

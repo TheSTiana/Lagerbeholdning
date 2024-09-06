@@ -2,8 +2,8 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class Inventory {
-    EnumMap<Product, Stock> inventory;
-    SupplyHistory supplyHistory;
+    private final EnumMap<Product, Stock> inventory;
+    private final SupplyHistory supplyHistory;
 
     public Inventory(SupplyHistory supplyHistory) {
         this.inventory = new EnumMap<>(Product.class);
