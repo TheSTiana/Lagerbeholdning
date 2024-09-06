@@ -68,9 +68,11 @@ public class ManagementSystem {
                 throw new Exception("I DO NOT SUPPORT THIS PRODUCT TYPE");
             }
 
-            OrderLine orderLine = new OrderLine(product, amount);
-            orderHistory.add(id, orderLine);
-            inventory.take(product, amount);
+            boolean orderWasFulfilled =  inventory.take(product, amount);
+            if(orderWasFulfilled)
+                orderHistory.add(id, new OrderLine(product, amount));
+            else
+                orderHistory.add(id, new OrderLine(product, amount, false));
         }
     }
 

@@ -17,25 +17,27 @@ public class Inventory {
 
     public boolean take(Product product, int orderAmount) {
         boolean hasProduct = inventory.containsKey(product);
-        if (!hasProduct)
+        if (!hasProduct){
             return false;
+        }
 
         Stock stock = inventory.get(product);
 
         boolean gotStock = stock.take(orderAmount);
-        if (!gotStock)
+        if (!gotStock){
             return false;
-
-        if(stock.isUnderThreshold()){
-            int refill = product.getRefillNumber();
         }
 
+        if(!stock.isUnderThreshold()){
+            return true;
+        }
+        
         int threshold = product.getThreshold();
-        int stockAmount = inventory.get(product).getAmount();
-        if(threshold > stockAmount) {
+        int currentAmount = inventory.get(product).getAmount();
+        if(threshold > currentAmount) {
             int refillAmount = product.getRefillNumber();
             stock.add(refillAmount);
-            supplyHistory.addSupplierRecord(new SupplierRecord(refillAmount, product, stockAmount));
+            supplyHistory.addSupplierRecord(new SupplierRecord(refillAmount, product, currentAmount));
         }
         return true;
     }

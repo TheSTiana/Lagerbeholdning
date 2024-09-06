@@ -9,7 +9,6 @@ public class OrderHistory {
         if (!orders.containsKey(id)) {
             ArrayList<OrderLine> ols = new ArrayList<>();
             ols.add(ol);
-
             orders.put(id, ols);
         } else {
             ArrayList<OrderLine> ols = orders.get(id);
@@ -28,8 +27,14 @@ public class OrderHistory {
             Integer key = entry.getKey();
             ArrayList<OrderLine> value = entry.getValue();
             for (OrderLine ol : value) {
-                String s = String.format("Ordre %d: Sendt %d stk. av vare [%s] %s", key, ol.getQuantity(), ol.getProduct(), ol.getProduct().getName());
-                str.append(s).append("\n");
+                if(ol.wasFulfilled()){
+                    String s = String.format("Ordre %d: Sendt %d stk. av vare [%s] %s", key, ol.getQuantity(), ol.getProduct(), ol.getProduct().getName());
+                    str.append(s).append("\n");
+                }
+                else{
+                    String s = String.format("Ordre %d: På %d stk. av vare [%s] %s - IKKE UTFØRT", key, ol.getQuantity(), ol.getProduct(), ol.getProduct().getName());
+                    str.append(s).append("\n");
+                }
             }
         }
         return str.toString();
