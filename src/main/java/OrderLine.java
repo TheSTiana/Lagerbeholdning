@@ -17,4 +17,9 @@ public class OrderLine {
     public Product getProduct() {return product;}
     public int getQuantity() { return quantity;}
     public boolean wasFulfilled() { return this.fulfilled; }
+
+    @Override
+    public String toString() {
+        return String.format("Order for %d of [%s]-%s was", quantity, product, product.getName()) + (fulfilled ? " fulfilled" : " not fulfilled");
+    }
 }

@@ -26,4 +26,9 @@ public class Stock {
     public boolean isUnderThreshold(){
         return this.amount < this.product.getThreshold();
     }
+
+    @Override
+    public String toString() {
+        return String.format("%d of [%s]-%s at %s", amount, product, product.getName(), shelf);
+    }
 }

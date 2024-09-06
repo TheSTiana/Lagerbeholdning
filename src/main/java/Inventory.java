@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -12,7 +13,12 @@ public class Inventory {
 
     public void add(Stock stock) {
         // does not support different shelf placements
-        inventory.put(stock.getProduct(), stock);
+        if (!inventory.containsKey(stock.getProduct())) {
+            inventory.put(stock.getProduct(), stock);
+        } else {
+            Stock existing = inventory.get(stock.getProduct());
+            existing.add(stock.getAmount());
+        }
     }
 
     public boolean take(Product product, int orderAmount) {
@@ -31,14 +37,11 @@ public class Inventory {
         if(!stock.isUnderThreshold()){
             return true;
         }
-        
-        int threshold = product.getThreshold();
+
         int currentAmount = inventory.get(product).getAmount();
-        if(threshold > currentAmount) {
-            int refillAmount = product.getRefillNumber();
-            stock.add(refillAmount);
-            supplyHistory.addSupplierRecord(new SupplierRecord(refillAmount, product, currentAmount));
-        }
+        int refillAmount = product.getRefillNumber();
+        stock.add(refillAmount);
+        supplyHistory.addSupplierRecord(new SupplierRecord(refillAmount, product, currentAmount));
         return true;
     }
 
